@@ -12,6 +12,11 @@
         android:theme="@style/Theme.ChatAppRoute"
         tools:targetApi="31">
         <activity
+            android:name=".activities.register.RegisterActivity"
+            android:exported="false"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.ChatAppRoute" />
+        <activity
             android:name=".activities.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"

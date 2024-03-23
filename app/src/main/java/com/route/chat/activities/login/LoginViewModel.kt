@@ -9,4 +9,14 @@ class LoginViewModel : ViewModel() {
     val password = mutableStateOf("")
     val errorEmail = mutableStateOf<String?>(null)
     val errorPassword = mutableStateOf<String?>(null)
+
+    val loginEvent = mutableStateOf<LoginEvent>(LoginEvent.Idle)
+
+    fun navigateToRegister() {
+        loginEvent.value = LoginEvent.NavigateToRegister
+    }
+
+    fun navigateToHome() {
+        loginEvent.value = LoginEvent.NavigateToHome
+    }
 }
