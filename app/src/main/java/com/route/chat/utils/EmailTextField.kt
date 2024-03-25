@@ -59,8 +59,7 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
                 errorContainerColor = Color.White,
                 errorIndicatorColor = Color.Red,
                 errorLabelColor = Color.Red,
-                errorTrailingIconColor = Color.Transparent,
-                errorTextColor = Color.Red,
+                errorTrailingIconColor = Color.Red,
                 errorCursorColor = Color.Gray,
             ),
             keyboardOptions = KeyboardOptions(
@@ -68,7 +67,14 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
                 imeAction = ImeAction.Next
             ),
             trailingIcon = {
-                if (errorMessage == null && Patterns.EMAIL_ADDRESS.matcher(state.value).matches()) {
+                if (errorMessage != null) {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_error),
+                            null
+                        )
+                    }
+                } else if (Patterns.EMAIL_ADDRESS.matcher(state.value).matches()) {
                     IconButton(onClick = { }) {
                         Icon(
                             painterResource(id = R.drawable.ic_check),
@@ -89,7 +95,6 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
         }
     }
 }
-
 
 @Preview(showSystemUi = true, device = "id:pixel_8_pro", showBackground = true)
 @Composable

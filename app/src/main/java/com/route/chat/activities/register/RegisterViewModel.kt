@@ -17,26 +17,32 @@ class RegisterViewModel : ViewModel() {
     val errorName = mutableStateOf<String?>(null)
     val errorEmail = mutableStateOf<String?>(null)
     val errorPassword = mutableStateOf<String?>(null)
-    val auth = Firebase.auth
+    private val auth = Firebase.auth
     val event = mutableStateOf<RegisterEvent>(RegisterEvent.Idle)
+    val isLoading = mutableStateOf(false)
+    val registerError = mutableStateOf("")
 
 
     fun register() {
         if (validateFields()) {
+            isLoading.value = true
             auth.createUserWithEmailAndPassword(email.value, password.value)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Log.e("TAG", "register: Error occurred ${task.exception?.message}")
+                        isLoading.value = false
+                        registerError.value = task.exception?.message
+                            ?: "something went wrong, please try again later."
                         return@addOnCompleteListener
                     }
                     val uid = task.result?.user?.uid
                     addUserToFirestore(uid!!)
-
+                    isLoading.value = false
                 }
         }
     }
 
-    fun addUserToFirestore(uid: String) {
+    private fun addUserToFirestore(uid: String) {
         val newUser = ChatUser(username.value, email.value, uid)
         FirebaseUtils.addUser(
             newUser,
@@ -44,12 +50,13 @@ class RegisterViewModel : ViewModel() {
                 navigateToHome(newUser)
             },
             onFailureListener = {
-
+                registerError.value = it.message
+                    ?: "something went wrong, please try again later."
             }
         )
     }
 
-    fun validateFields(): Boolean {
+    private fun validateFields(): Boolean {
         if (username.value.trim().isEmpty()) {
             errorName.value = "required"
             return false
@@ -80,7 +87,7 @@ class RegisterViewModel : ViewModel() {
         return true
     }
 
-    fun navigateToHome(user: ChatUser) {
+    private fun navigateToHome(user: ChatUser) {
         event.value = RegisterEvent.NavigateToHome(user)
     }
 }

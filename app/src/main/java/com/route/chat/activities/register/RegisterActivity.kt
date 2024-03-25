@@ -27,6 +27,8 @@ import com.route.chat.activities.home.HomeActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
 import com.route.chat.utils.CreateAccountButton
 import com.route.chat.utils.EmailTextField
+import com.route.chat.utils.ErrorDialog
+import com.route.chat.utils.LoadingDialog
 import com.route.chat.utils.PasswordTextField
 import com.route.chat.utils.RegisterAppBar
 import com.route.chat.utils.UsernameTextField
@@ -85,7 +87,7 @@ fun RegisterScreen(
                     contentDescription = null,
                     alpha = 00F
                 )
-                UsernameTextField(vm.username)
+                UsernameTextField(vm.username, vm.errorName.value)
 
                 EmailTextField(vm.email, vm.errorEmail.value)
 
@@ -100,6 +102,8 @@ fun RegisterScreen(
                 )
             }
         }
+        LoadingDialog(isLoading = vm.isLoading)
+        ErrorDialog(title = vm.registerError)
     }
     RegisterNavigation(event = vm.event.value, onRegisterSuccess)
 }

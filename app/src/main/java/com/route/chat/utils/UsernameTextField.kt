@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -13,16 +15,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.route.chat.R
 import com.route.chat.ui.theme.mainBlue
 
 @Composable
-fun UsernameTextField(state: MutableState<String>) {
+fun UsernameTextField(state: MutableState<String>, errorMessage: String?) {
 
     Column(
         modifier = Modifier
@@ -35,6 +41,7 @@ fun UsernameTextField(state: MutableState<String>) {
                 state.value = newText
             },
             singleLine = true,
+            isError = errorMessage != null,
             label = { Text(text = stringResource(id = R.string.username)) },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -51,15 +58,40 @@ fun UsernameTextField(state: MutableState<String>) {
                 errorContainerColor = Color.White,
                 errorIndicatorColor = Color.Red,
                 errorLabelColor = Color.Red,
-                errorTrailingIconColor = Color.Transparent,
-                errorTextColor = Color.Red,
+                errorTrailingIconColor = Color.Red,
                 errorCursorColor = Color.Gray,
             ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
-            )
+            ),
+            trailingIcon = {
+                if (errorMessage != null) {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_error),
+                            null
+                        )
+                    }
+                } else if (state.value.trim().isNotEmpty()) {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_check),
+                            null
+                        )
+                    }
+                }
+            }
         )
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage, style = TextStyle(
+                    Color.Red, 14.sp,
+                    FontWeight.Normal
+                ),
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+        }
     }
 }
 
@@ -68,6 +100,6 @@ fun UsernameTextField(state: MutableState<String>) {
 @Composable
 private fun TextFieldPreview() {
     UsernameTextField(
-        remember { mutableStateOf("") }
+        remember { mutableStateOf("") }, null
     )
 }

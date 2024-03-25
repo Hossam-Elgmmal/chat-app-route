@@ -37,7 +37,9 @@ import com.route.chat.activities.home.HomeActivity
 import com.route.chat.activities.register.RegisterActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
 import com.route.chat.utils.EmailTextField
+import com.route.chat.utils.ErrorDialog
 import com.route.chat.utils.ForgotPasswordButton
+import com.route.chat.utils.LoadingDialog
 import com.route.chat.utils.LoginAuthButton
 import com.route.chat.utils.NewAccountButton
 import com.route.chat.utils.PasswordTextField
@@ -118,7 +120,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
                     // to do
                 }
                 LoginAuthButton {
-                    vm.navigateToHome()
+                    vm.login()
                 }
                 NewAccountButton {
                     vm.navigateToRegister()
@@ -130,22 +132,25 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
                 )
             }
         }
+        LoadingDialog(isLoading = vm.isLoading)
+        ErrorDialog(title = vm.loginError)
+    }
         LoginNavigation(vm) {
             onFinish()
         }
-    }
 }
 
 @Composable
 fun LoginNavigation(vm: LoginViewModel, onFinish: () -> Unit) {
     val context = LocalContext.current
     when (vm.loginEvent.value) {
+
         LoginEvent.Idle -> {}
-        LoginEvent.NavigateToHome -> {
+
+        is LoginEvent.NavigateToHome -> {
             val intent = Intent(context, HomeActivity::class.java)
             context.startActivity(intent)
-            vm.loginEvent.value = LoginEvent.Idle
-            // onFinish()
+            onFinish()
         }
 
         LoginEvent.NavigateToRegister -> {
