@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -89,8 +90,6 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
         )
         LazyColumn(
             modifier = Modifier
-                .imePadding()
-                .consumeWindowInsets(paddingValues)
                 .fillMaxSize()
         ) {
 
@@ -124,6 +123,11 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
                 NewAccountButton {
                     vm.navigateToRegister()
                 }
+                Spacer(
+                    modifier = Modifier
+                        .imePadding()
+                        .consumeWindowInsets(paddingValues)
+                )
             }
         }
         LoginNavigation(vm) {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270350593044",
+    "project_id": "chat-route-85eec",
+    "storage_bucket": "chat-route-85eec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270350593044:android:d3366b8028e205ef288b01",
+        "android_client_info": {
+          "package_name": "com.route.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ziv0oJXS8SI53zR6WSw9uANIgJTPyWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

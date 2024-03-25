@@ -1,37 +1,34 @@
 package com.route.chat.activities.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.route.chat.R
+import com.route.chat.activities.home.HomeActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
 import com.route.chat.utils.CreateAccountButton
 import com.route.chat.utils.EmailTextField
 import com.route.chat.utils.PasswordTextField
+import com.route.chat.utils.RegisterAppBar
 import com.route.chat.utils.UsernameTextField
 
 class RegisterActivity : ComponentActivity() {
@@ -40,47 +37,32 @@ class RegisterActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChatAppRouteTheme {
-                RegisterScreen {
-                    finish()
-                }
+                RegisterScreen(
+                    onRegisterSuccess = {
+                        finishAffinity()
+                    }, onFinish = {
+                        finish()
+                    })
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(vm: RegisterViewModel = viewModel(), onFinish: () -> Unit) {
+fun RegisterScreen(
+    vm: RegisterViewModel = viewModel(),
+    onRegisterSuccess: () -> Unit,
+    onFinish: () -> Unit
+) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Transparent),
         containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.new_account),
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                colors = TopAppBarDefaults
-                    .centerAlignedTopAppBarColors(
-                        Color.Transparent,
-                        titleContentColor = Color.White
-                    ),
-                navigationIcon = {
-                    IconButton(onClick = {
-                        onFinish()
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_back),
-                            contentDescription = stringResource(R.string.back_to_login),
-                            tint = Color.White
-                        )
-                    }
-                }
-            )
+            RegisterAppBar {
+                onFinish()
+            }
         }
     ) { paddingValues ->
 
@@ -92,8 +74,6 @@ fun RegisterScreen(vm: RegisterViewModel = viewModel(), onFinish: () -> Unit) {
         )
         LazyColumn(
             modifier = Modifier
-                .imePadding()
-                .consumeWindowInsets(paddingValues)
                 .fillMaxSize()
         ) {
 
@@ -111,8 +91,30 @@ fun RegisterScreen(vm: RegisterViewModel = viewModel(), onFinish: () -> Unit) {
 
                 PasswordTextField(vm.password, vm.errorPassword.value)
 
-                CreateAccountButton {}
+                CreateAccountButton { vm.register() }
+
+                Spacer(
+                    modifier = Modifier
+                        .imePadding()
+                        .consumeWindowInsets(paddingValues)
+                )
             }
+        }
+    }
+    RegisterNavigation(event = vm.event.value, onRegisterSuccess)
+}
+
+@Composable
+fun RegisterNavigation(event: RegisterEvent, onRegisterSuccess: () -> Unit) {
+
+    val context = LocalContext.current
+
+    when (event) {
+        RegisterEvent.Idle -> {}
+        is RegisterEvent.NavigateToHome -> {
+            val intent = Intent(context, HomeActivity::class.java)
+            context.startActivity(intent)
+            onRegisterSuccess()
         }
     }
 }
@@ -120,5 +122,5 @@ fun RegisterScreen(vm: RegisterViewModel = viewModel(), onFinish: () -> Unit) {
 @Preview(showSystemUi = true, showBackground = true, device = "id:pixel_8_pro")
 @Composable
 private fun RegisterScreenPreview() {
-    RegisterScreen {}
+    RegisterScreen(onRegisterSuccess = {}, onFinish = {})
 }
