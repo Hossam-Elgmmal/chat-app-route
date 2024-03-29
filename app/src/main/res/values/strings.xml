@@ -15,4 +15,7 @@
     <string name="create_account">Create Account</string>
     <string name="dismiss">Dismiss</string>
     <string name="ok">OK</string>
+    <string name="chat_app">Chat App</string>
+    <string name="add_new_room">add new room</string>
+    <string name="title_activity_add_room">AddRoomActivity</string>
 </resources>
