@@ -35,6 +35,7 @@ import com.route.chat.ui.theme.ChatAppRouteTheme
 import com.route.chat.ui.theme.mainBlue
 import com.route.chat.utils.appbars.AddRoomAppBar
 import com.route.chat.utils.buttons.CreateRoomButton
+import com.route.chat.utils.dialogs.LoadingDialog
 import com.route.chat.utils.menus.CategoriesMenu
 import com.route.chat.utils.textfields.RoomDescriptionTextField
 import com.route.chat.utils.textfields.RoomNameTextField
@@ -112,7 +113,9 @@ fun AddRoomContent(vm: AddRoomViewModel = viewModel(), onFinish: () -> Unit) {
                         errorMessage = vm.roomDescriptionError.value
                     )
                     Spacer(modifier = Modifier.padding(16.dp))
-                    CreateRoomButton {}
+                    CreateRoomButton {
+                        vm.addRoomToFirestore()
+                    }
                     Spacer(modifier = Modifier
                         .padding(8.dp)
                         .imePadding())
@@ -120,7 +123,23 @@ fun AddRoomContent(vm: AddRoomViewModel = viewModel(), onFinish: () -> Unit) {
             }
         }
     }
+    LoadingDialog(isLoading = vm.isLoading)
+    AddRoomNavigation(vm, onFinish)
 }
+
+@Composable
+fun AddRoomNavigation(vm: AddRoomViewModel, onFinish: () -> Unit) {
+
+    when (vm.event.value) {
+        AddRoomEvent.Idle -> {}
+        AddRoomEvent.NavigateBack -> {
+
+            onFinish()
+        }
+    }
+}
+
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable

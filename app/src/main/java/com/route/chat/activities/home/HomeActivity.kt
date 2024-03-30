@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.route.chat.R
 import com.route.chat.activities.addroom.AddRoomActivity
@@ -59,13 +60,15 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
                 },
                 containerColor = mainBlue,
                 contentColor = Color.White,
-                shape = CircleShape
+                shape = CircleShape,
+                modifier = Modifier.padding(16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_add),
                     contentDescription = stringResource(
                         R.string.add_new_room
-                    )
+                    ),
+                    modifier = Modifier.padding(16.dp)
                 )
             }
         }
