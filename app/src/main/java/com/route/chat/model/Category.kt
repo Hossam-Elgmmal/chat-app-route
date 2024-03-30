@@ -19,7 +19,7 @@ data class Category(
             )
         }
 
-        private fun fromId(id: String): Category {
+        fun fromId(id: String): Category {
             return when (id) {
                 MOVIES -> Category()
                 MUSIC -> Category(MUSIC, MUSIC, R.drawable.img_music)

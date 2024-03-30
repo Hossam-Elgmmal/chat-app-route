@@ -43,9 +43,13 @@ object FirebaseUtils {
         onSuccessListener: OnSuccessListener<Void>,
         onFailureListener: OnFailureListener
     ) {
-        Firebase.firestore.collection(Room.COLLECTION_NAME)
+        val docRef = Firebase.firestore
+            .collection(Room.COLLECTION_NAME)
             .document()
-            .set(room)
+
+        room.roomId = docRef.id
+
+        docRef.set(room)
             .addOnSuccessListener(onSuccessListener)
             .addOnFailureListener(onFailureListener)
 
