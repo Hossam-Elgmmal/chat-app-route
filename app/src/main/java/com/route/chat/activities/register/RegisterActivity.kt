@@ -25,13 +25,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.route.chat.R
 import com.route.chat.activities.home.HomeActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
-import com.route.chat.utils.CreateAccountButton
-import com.route.chat.utils.EmailTextField
-import com.route.chat.utils.ErrorDialog
-import com.route.chat.utils.LoadingDialog
-import com.route.chat.utils.PasswordTextField
-import com.route.chat.utils.RegisterAppBar
-import com.route.chat.utils.UsernameTextField
+import com.route.chat.utils.appbars.RegisterAppBar
+import com.route.chat.utils.buttons.CreateAccountButton
+import com.route.chat.utils.dialogs.ErrorDialog
+import com.route.chat.utils.dialogs.LoadingDialog
+import com.route.chat.utils.textfields.EmailTextField
+import com.route.chat.utils.textfields.PasswordTextField
+import com.route.chat.utils.textfields.UsernameTextField
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

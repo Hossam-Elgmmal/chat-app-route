@@ -1,6 +1,5 @@
-package com.route.chat.utils
+package com.route.chat.utils.textfields
 
-import android.util.Patterns
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,12 +28,11 @@ import com.route.chat.R
 import com.route.chat.ui.theme.mainBlue
 
 @Composable
-fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
+fun RoomNameTextField(state: MutableState<String>, errorMessage: String?) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp, 16.dp)
     ) {
         TextField(
             value = state.value,
@@ -43,7 +41,7 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
             },
             singleLine = true,
             isError = errorMessage != null,
-            label = { Text(text = stringResource(id = R.string.email)) },
+            placeholder = { Text(text = stringResource(id = R.string.room_name)) },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = TextFieldDefaults.colors(
@@ -51,8 +49,8 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
                 unfocusedContainerColor = Color.White,
                 focusedIndicatorColor = mainBlue,
                 unfocusedIndicatorColor = Color.Gray,
-                focusedLabelColor = Color.Gray,
-                unfocusedLabelColor = Color.Gray,
+                focusedPlaceholderColor = Color.LightGray,
+                unfocusedPlaceholderColor = Color.LightGray,
                 cursorColor = Color.Gray,
                 focusedTrailingIconColor = mainBlue,
                 unfocusedTrailingIconColor = mainBlue,
@@ -63,7 +61,7 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
                 errorCursorColor = Color.Gray,
             ),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
             ),
             trailingIcon = {
@@ -74,7 +72,7 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
                             null
                         )
                     }
-                } else if (Patterns.EMAIL_ADDRESS.matcher(state.value).matches()) {
+                } else if (state.value.trim().isNotEmpty()) {
                     IconButton(onClick = { }) {
                         Icon(
                             painterResource(id = R.drawable.ic_check),
@@ -96,12 +94,11 @@ fun EmailTextField(state: MutableState<String>, errorMessage: String?) {
     }
 }
 
+
 @Preview(showSystemUi = true, device = "id:pixel_8_pro", showBackground = true)
 @Composable
 private fun TextFieldPreview() {
-    EmailTextField(
-        remember {
-            mutableStateOf("")
-        }, null
+    RoomNameTextField(
+        remember { mutableStateOf("") }, null
     )
 }

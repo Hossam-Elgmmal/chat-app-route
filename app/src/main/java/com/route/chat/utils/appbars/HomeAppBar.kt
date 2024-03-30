@@ -1,4 +1,4 @@
-package com.route.chat.utils
+package com.route.chat.utils.appbars
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,11 +16,11 @@ import com.route.chat.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterAppBar(onNavigationClick: () -> Unit) {
+fun HomeAppBar() {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.new_account),
+                text = stringResource(R.string.chat_app),
                 fontWeight = FontWeight.Bold
             )
         },
@@ -29,12 +29,12 @@ fun RegisterAppBar(onNavigationClick: () -> Unit) {
                 Color.Transparent,
                 titleContentColor = Color.White
             ),
-        navigationIcon = {
+        actions = {
             IconButton(onClick = {
-                onNavigationClick()
+
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
+                    painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = stringResource(R.string.back_to_login),
                     tint = Color.White
                 )
@@ -45,6 +45,6 @@ fun RegisterAppBar(onNavigationClick: () -> Unit) {
 
 @Preview
 @Composable
-private fun RegisterAppBarPreview() {
-    RegisterAppBar {}
+private fun HomeAppBarPreview() {
+    HomeAppBar()
 }

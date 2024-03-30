@@ -1,4 +1,4 @@
-package com.route.chat.utils
+package com.route.chat.utils.buttons
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

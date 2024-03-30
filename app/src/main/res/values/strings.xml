@@ -18,4 +18,9 @@
     <string name="chat_app">Chat App</string>
     <string name="add_new_room">add new room</string>
     <string name="title_activity_add_room">AddRoomActivity</string>
+    <string name="create_new_room">Create New Room</string>
+    <string name="room_group">Room Group</string>
+    <string name="room_name">Room Name</string>
+    <string name="room_description">Room Description</string>
+    <string name="create">Create</string>
 </resources>

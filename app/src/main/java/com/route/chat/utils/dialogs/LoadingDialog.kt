@@ -1,4 +1,4 @@
-package com.route.chat.utils
+package com.route.chat.utils.dialogs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

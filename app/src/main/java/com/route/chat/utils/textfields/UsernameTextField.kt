@@ -1,4 +1,4 @@
-package com.route.chat.utils
+package com.route.chat.utils.textfields
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,10 +11,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -23,8 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,9 +28,7 @@ import com.route.chat.R
 import com.route.chat.ui.theme.mainBlue
 
 @Composable
-fun PasswordTextField(passwordState: MutableState<String>, errorMessage: String?) {
-
-    var showPassword by remember { mutableStateOf(false) }
+fun UsernameTextField(state: MutableState<String>, errorMessage: String?) {
 
     Column(
         modifier = Modifier
@@ -42,13 +36,13 @@ fun PasswordTextField(passwordState: MutableState<String>, errorMessage: String?
             .padding(20.dp, 16.dp)
     ) {
         TextField(
-            value = passwordState.value,
+            value = state.value,
             onValueChange = { newText ->
-                passwordState.value = newText
+                state.value = newText
             },
             singleLine = true,
             isError = errorMessage != null,
-            label = { Text(text = stringResource(id = R.string.password)) },
+            placeholder = { Text(text = stringResource(id = R.string.username)) },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = TextFieldDefaults.colors(
@@ -56,36 +50,33 @@ fun PasswordTextField(passwordState: MutableState<String>, errorMessage: String?
                 unfocusedContainerColor = Color.White,
                 focusedIndicatorColor = mainBlue,
                 unfocusedIndicatorColor = Color.Gray,
-                focusedLabelColor = Color.Gray,
-                unfocusedLabelColor = Color.Gray,
+                focusedPlaceholderColor = Color.LightGray,
+                unfocusedPlaceholderColor = Color.LightGray,
                 cursorColor = Color.Gray,
+                focusedTrailingIconColor = mainBlue,
+                unfocusedTrailingIconColor = mainBlue,
                 errorContainerColor = Color.White,
                 errorIndicatorColor = Color.Red,
                 errorLabelColor = Color.Red,
-                errorTrailingIconColor = Color.DarkGray,
+                errorTrailingIconColor = Color.Red,
                 errorCursorColor = Color.Gray,
             ),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
             ),
-            visualTransformation = if (showPassword) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
             trailingIcon = {
-                if (showPassword) {
-                    IconButton(onClick = { showPassword = false }) {
+                if (errorMessage != null) {
+                    IconButton(onClick = { }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_visibility),
+                            painterResource(id = R.drawable.ic_error),
                             null
                         )
                     }
-                } else {
-                    IconButton(onClick = { showPassword = true }) {
+                } else if (state.value.trim().isNotEmpty()) {
+                    IconButton(onClick = { }) {
                         Icon(
-                            painterResource(id = R.drawable.ic_visibility_off),
+                            painterResource(id = R.drawable.ic_check),
                             null
                         )
                     }
@@ -108,9 +99,7 @@ fun PasswordTextField(passwordState: MutableState<String>, errorMessage: String?
 @Preview(showSystemUi = true, device = "id:pixel_8_pro", showBackground = true)
 @Composable
 private fun TextFieldPreview() {
-    PasswordTextField(
-        remember {
-            mutableStateOf("")
-        }, null
+    UsernameTextField(
+        remember { mutableStateOf("") }, null
     )
 }

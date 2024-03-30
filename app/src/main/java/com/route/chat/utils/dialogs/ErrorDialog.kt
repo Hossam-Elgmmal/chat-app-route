@@ -1,4 +1,4 @@
-package com.route.chat.utils
+package com.route.chat.utils.dialogs
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

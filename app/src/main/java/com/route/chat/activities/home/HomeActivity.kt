@@ -27,7 +27,7 @@ import com.route.chat.R
 import com.route.chat.activities.addroom.AddRoomActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
 import com.route.chat.ui.theme.mainBlue
-import com.route.chat.utils.HomeAppBar
+import com.route.chat.utils.appbars.HomeAppBar
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

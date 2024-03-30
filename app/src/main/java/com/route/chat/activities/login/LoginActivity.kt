@@ -14,11 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,13 +33,14 @@ import com.route.chat.R
 import com.route.chat.activities.home.HomeActivity
 import com.route.chat.activities.register.RegisterActivity
 import com.route.chat.ui.theme.ChatAppRouteTheme
-import com.route.chat.utils.EmailTextField
-import com.route.chat.utils.ErrorDialog
-import com.route.chat.utils.ForgotPasswordButton
-import com.route.chat.utils.LoadingDialog
-import com.route.chat.utils.LoginAuthButton
-import com.route.chat.utils.NewAccountButton
-import com.route.chat.utils.PasswordTextField
+import com.route.chat.utils.appbars.LoginAppBar
+import com.route.chat.utils.buttons.ForgotPasswordButton
+import com.route.chat.utils.buttons.LoginAuthButton
+import com.route.chat.utils.buttons.NewAccountButton
+import com.route.chat.utils.dialogs.ErrorDialog
+import com.route.chat.utils.dialogs.LoadingDialog
+import com.route.chat.utils.textfields.EmailTextField
+import com.route.chat.utils.textfields.PasswordTextField
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +56,6 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
 
@@ -68,19 +65,7 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
             .background(Color.Transparent),
         containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.login),
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                colors = TopAppBarDefaults
-                    .centerAlignedTopAppBarColors(
-                        Color.Transparent,
-                        titleContentColor = Color.White
-                    )
-            )
+            LoginAppBar()
         }
     ) { paddingValues ->
 
@@ -135,9 +120,9 @@ fun LoginScreen(vm: LoginViewModel = viewModel(), onFinish: () -> Unit) {
         LoadingDialog(isLoading = vm.isLoading)
         ErrorDialog(title = vm.loginError)
     }
-        LoginNavigation(vm) {
-            onFinish()
-        }
+    LoginNavigation(vm) {
+        onFinish()
+    }
 }
 
 @Composable
