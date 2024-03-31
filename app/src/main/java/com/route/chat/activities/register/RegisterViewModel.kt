@@ -8,6 +8,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.route.chat.firebase.FirebaseUtils
 import com.route.chat.model.ChatUser
+import com.route.chat.model.DataUtils
 
 class RegisterViewModel : ViewModel() {
 
@@ -47,6 +48,7 @@ class RegisterViewModel : ViewModel() {
         FirebaseUtils.addUser(
             newUser,
             onSuccessListener = {
+                DataUtils.chatUser = newUser
                 navigateToHome(newUser)
             },
             onFailureListener = {

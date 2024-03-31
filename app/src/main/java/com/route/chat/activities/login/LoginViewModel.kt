@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.route.chat.firebase.FirebaseUtils
 import com.route.chat.model.ChatUser
+import com.route.chat.model.DataUtils
 
 class LoginViewModel : ViewModel() {
 
@@ -55,6 +56,7 @@ class LoginViewModel : ViewModel() {
             uid,
             onSuccessListener = { docSnapshot ->
                 val user = docSnapshot.toObject(ChatUser::class.java)
+                DataUtils.chatUser = user
                 navigateToHome(user!!)
 
             },

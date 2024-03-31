@@ -13,14 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.route.chat.R
+import com.route.chat.model.Room
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeAppBar() {
+fun ChatRoomAppBar(room: Room, onNavigationClick: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.chat_app),
+                text = room.name,
                 fontWeight = FontWeight.Bold
             )
         },
@@ -29,13 +30,24 @@ fun HomeAppBar() {
                 Color.Transparent,
                 titleContentColor = Color.White
             ),
+        navigationIcon = {
+            IconButton(onClick = {
+                onNavigationClick()
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = stringResource(R.string.back_to_home),
+                    tint = Color.White
+                )
+            }
+        },
         actions = {
             IconButton(onClick = {
 
             }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    contentDescription = stringResource(R.string.search),
+                    painter = painterResource(id = R.drawable.ic_more),
+                    contentDescription = stringResource(R.string.more_options),
                     tint = Color.White
                 )
             }
@@ -45,6 +57,8 @@ fun HomeAppBar() {
 
 @Preview
 @Composable
-private fun HomeAppBarPreview() {
-    HomeAppBar()
+private fun ChatRoomBarPreview() {
+    ChatRoomAppBar(Room("name")) {
+
+    }
 }

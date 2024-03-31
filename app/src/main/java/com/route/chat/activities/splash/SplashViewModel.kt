@@ -7,6 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.route.chat.firebase.FirebaseUtils
 import com.route.chat.model.ChatUser
+import com.route.chat.model.DataUtils
 
 
 class SplashViewModel : ViewModel() {
@@ -39,6 +40,7 @@ class SplashViewModel : ViewModel() {
             uid = uid,
             onSuccessListener = {
                 val chatUser = it.toObject(ChatUser::class.java)
+                DataUtils.chatUser = chatUser
                 chatUser?.let { user ->
                     navigateToHome(user)
                 } ?: navigateToLogin()
