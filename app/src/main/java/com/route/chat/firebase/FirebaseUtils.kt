@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -49,7 +50,7 @@ object FirebaseUtils {
             .collection(Room.COLLECTION_NAME)
             .document()
 
-        room.roomId = docRef.id
+        room.id = docRef.id
 
         docRef.set(room)
             .addOnSuccessListener(onSuccessListener)
@@ -92,6 +93,7 @@ object FirebaseUtils {
         Firebase.firestore.collection(Room.COLLECTION_NAME)
             .document(roomId)
             .collection(Message.COLLECTION_NAME)
+            .orderBy("dateTime", Query.Direction.DESCENDING)
             .addSnapshotListener(eventListener)
 
     }
